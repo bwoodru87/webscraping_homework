@@ -32,7 +32,7 @@ def scrape():
     image = soup_image.find_all('a',class_='fancybox')
     image[0]
     link = image[0]["data-fancybox-href"]
-    full_link = url_image + link
+    full_link = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars" + link
     mars_data["full_image"] = full_link
 
 
@@ -41,16 +41,13 @@ def scrape():
     response_weather = requests.get(url_weather)
     soup_weather = BeautifulSoup(response_weather.text, 'html.parser')
     
-  
     tweets = []
     for text in soup_weather.findAll('p',attrs={"class":"TweetTextSize TweetTextSize--normal js-tweet-text tweet-text"}):
         a = text.get_text()
         tweets.append(a)
 
     first_tweet = tweets[0]
-
     mars_data["mars_weather"] = first_tweet
-
 
 
 
