@@ -1,16 +1,8 @@
 from bs4 import BeautifulSoup
-from splinter import Browser
 import requests
 import pandas as pd
 
-def init_browser():
-    # @NOTE: Replace the path with your actual path to the chromedriver
-    executable_path = {"executable_path": "/usr/local/bin/chromedriver"}
-    return Browser("chrome", **executable_path, headless=True)
-
-
 def scrape():
-    browser = init_browser()
     mars_data = {}
 
     url = 'https://mars.nasa.gov/news/'
@@ -27,8 +19,11 @@ def scrape():
         a = text.get_text()
         content.append(a)
 
-    mars_data["latest_title"] = titles[0]
-    mars_data["latest_content"] = content[0]
+    recent_title = titles[0]
+    recent_content = content[0]
+
+    mars_data["latest_title"] = recent_title
+    mars_data["latest_content"] = recent_content
 
 
     url_image = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -37,8 +32,8 @@ def scrape():
     image = soup_image.find_all('a',class_='fancybox')
     image[0]
     link = image[0]["data-fancybox-href"]
-    
-    mars_data["image_link"] = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars" + link
+    full_link = url_image + link
+    mars_data["full_image"] = full_link
 
 
 
@@ -46,13 +41,15 @@ def scrape():
     response_weather = requests.get(url_weather)
     soup_weather = BeautifulSoup(response_weather.text, 'html.parser')
     
-    #create a list to store latest headline titles
+  
     tweets = []
     for text in soup_weather.findAll('p',attrs={"class":"TweetTextSize TweetTextSize--normal js-tweet-text tweet-text"}):
         a = text.get_text()
         tweets.append(a)
 
-    mars_data["mars_weather"] = tweets[0]
+    first_tweet = tweets[0]
+
+    mars_data["mars_weather"] = first_tweet
 
 
 
@@ -79,8 +76,6 @@ def scrape():
     {"title": hemi_title[3], "img_url": hemi_url[3]},
     ]
     mars_data["hemi_urls"] = hemisphere_image_urls
-
-
 
 
     url = 'https://space-facts.com/mars/'

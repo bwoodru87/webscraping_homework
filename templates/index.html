@@ -10,21 +10,55 @@
 </head>
 
 <body>
-  <div class="container">
-
-    <div class="jumbotron text-center">
-      <h1>Real time Mars information!</h1>
-      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape new data!</a></p>
+  <div clas="container">
+    <div class="jumbotron">
+        <h1 align="center">Mission to Mars</h1>
+        
+        <p align="Center">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Scrape new data!</a>
+        </p>
+    </div>
+    <div class="page-header">
+        <h1>Latest Mars Headlines</h1>
+    </div>
+    
+    {% for data in mars %} 
+    <div class="container-fluid">
+        <h2>{{ mars_data.latest_title }}</h2>
+        <p>{{ mars_data.latest_content }}</p>
     </div>
 
-    <!-- Mars information here -->
-    <div class="row" id="mars_info1">
-      <div class="col-md-12">
-        <h4 class="heading">{{ mars_data_information }}</h4>
-      </div>
-    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-7">
+                <h3>Featured Image</h3>
+                
+                <img src="{{ mars_data.full_image}}" alt="full image" style="width: 70%;">
 
-  </div>
+            </div>
+            <div class="col-md-5">
+                <ul>
+                    <h3>Current Mars Weather</h3>
+                    {{ mars_data.mars_weather }}
+                </ul>
+            </div>
+        </div>                 
+    </div>                               
+    <!-- {% endfor %} -->
+
+
+            </div>
+        </div>
+        </div>
+
+    </div>
+    
+    
+    {% endfor %}              
+                 
+</div>
+
+</div>
 </body>
 
 </html>
