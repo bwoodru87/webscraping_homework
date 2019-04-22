@@ -15,11 +15,11 @@
             <h1 align="center">Mission to Mars</h1>
             
             <p align="Center">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Scrape new Mars data!</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Scrape new Mars data here</a>
             </p>
         </div>
         <div class="page-header">
-            <h1>Latest Mars Headline</h1>
+            <h1 style="padding-left:15px">Latest Mars Headline:</h1>
         </div>
 </div>  
 
@@ -39,21 +39,47 @@
                 </div>
                 <div class="col-md-5">
                     <ul>
-                        <h3>Current Mars Weather!</h3>
+                        <h3>Current Weather on Mars</h3>
                         {{ data.mars_weather }}
                     </ul>
                     <br>
                     <br>    
                         
                     <ul>
-                        <h3>Mars Facts!</h3>
+                        <h3>Intersting Mars Facts</h3>
                         {{ data.mars_data_table|safe }}
                         <a href="{{data.mars_data_table}}"></a>
                     </ul>
                 </div>
             </div>                 
         </div>
+        <br><br>
+        <div class="container-fluid">
+            <H3 align="left">Mars Hemisphere Images</H3>
+            <div class="body">
+            <div class="row">
+                <div class="col-md-6">
+                    {% for hemisphere in data.hemi_urls[0:2] %}
+                    
+                    <img src="{{hemisphere['image url']}}" alt="hemisphere" style="width:50%;">
+                    <div class="caption"style="font-weight: bold;">
+                        {{hemisphere['title']}}
+                    </div>                                           
+                    {% endfor %}
+                </div>
+                <div class="col-md-6">
+                    {% for hemisphere in data.hemi_urls[2:4] %}
+                    
+                    <img src="{{hemisphere['image url']}}" alt="hemisphere" style="width:50%;">
+                    <div class="caption" style="font-weight: bold;">
+                        {{hemisphere['title']}}
+                    </div>                                           
+                    {% endfor %}
+                </div>
+            </div>
+            </div>
 
+        </div>
         {% endfor %}              
                      
     </div>
