@@ -1,3 +1,4 @@
+import sys
 from flask import Flask, render_template, jsonify, redirect
 import pymongo
 import scrape_mars
@@ -13,10 +14,10 @@ def scraper():
     mars = scrape_mars.scrape()
     print("----------")     
     db.mars_facts.insert_one(mars)
-    return "Some scrapped data"
+    return "Here is the scrapped data"
 
 @app.route("/")
-def home():
+def index():
     mars = list(db.mars_facts.find())
     print(mars)
     return render_template("index.html", mars = mars)
